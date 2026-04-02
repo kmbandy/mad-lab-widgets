@@ -1,0 +1,67 @@
+// AGS dark fantasy styles
+
+window.GpuScroll {
+  background: transparent;
+}
+
+.scroll-container {
+  background: rgba(13, 11, 10, 0.92);
+  border: 2px solid rgba(120, 20, 20, 0.8);
+  padding: 14px 18px;
+  min-width: 220px;
+}
+
+.scroll-container label {
+  font-family: "VT323";
+  font-size: 20px;
+  color: #c8b89a;
+}
+
+.scroll-title {
+  font-family: "VT323";
+  font-size: 24px;
+  color: #b41414;
+  letter-spacing: 2px;
+}
+
+.divider {
+  background: rgba(120, 20, 20, 0.6);
+  min-height: 2px;
+  margin: 4px 0;
+}
+
+.stat-label {
+  font-family: "VT323";
+  font-size: 20px;
+  color: #a09080;
+}
+
+.stat-value {
+  font-family: "VT323";
+  font-size: 20px;
+  color: #c8b89a;
+}
+
+.util-bar {
+  min-height: 8px;
+  margin-top: 2px;
+}
+
+.util-bar trough {
+  background: rgba(40, 30, 20, 0.8);
+  border: 1px solid rgba(80, 60, 40, 0.5);
+  border-radius: 0;
+}
+
+.util-bar block.filled {
+  background: rgba(180, 20, 20, 0.85);
+  border-radius: 0;
+}
+
+.util-bar.warn block.filled {
+  background: rgba(220, 60, 20, 0.95);
+}
+
+.stat-section {
+  margin-top: 4px;
+}
