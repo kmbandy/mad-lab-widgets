@@ -54,12 +54,12 @@ export default function BookWidget(gdkmonitor: Gdk.Monitor) {
   }
 
   const mk = (font: string, size: number, text: string) =>
-    `<span font_family="${font}" font_size="${size}pt">${text}</span>`
+    `<span font_family="${font}" font_size="${size}pt" foreground="#3d0a0a">${text}</span>`
 
   // Content overlay
   const gpuPage = (
     <box cssName="book-page" orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-      <label use_markup label={mk("VT323", 20, "▓ GPU ▓")} />
+      <label use_markup label={mk("VT323", 20, "✦ GPU ✦")} />
       <label use_markup label={gpuStats(s => mk("VT323", 18, `TEMP  ${s.temp}`))} />
       <label use_markup label={gpuStats(s => mk("VT323", 18, `GPU   ${s.gpuUtil}`))} />
       <label use_markup label={gpuStats(s => mk("VT323", 18, `VRAM  ${s.vramUtil}`))} />
@@ -68,7 +68,7 @@ export default function BookWidget(gdkmonitor: Gdk.Monitor) {
 
   const sysPage = (
     <box cssName="book-page" orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-      <label use_markup label={mk("VT323", 20, "▓ SYS ▓")} />
+      <label use_markup label={mk("VT323", 20, "✦ SYS ✦")} />
       <label use_markup label={systemStats(s => mk("VT323", 18, `TEMP  ${s.cpuTemp}`))} />
       <label use_markup label={systemStats(s => mk("VT323", 18, `CPU   ${s.cpuUtil}`))} />
       <label use_markup label={systemStats(s => mk("VT323", 18, `RAM   ${s.ramUtil}`))} />
