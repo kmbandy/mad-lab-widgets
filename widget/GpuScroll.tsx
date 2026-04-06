@@ -1,6 +1,7 @@
 import app from "ags/gtk4/app"
 import { Astal, Gtk, Gdk } from "ags/gtk4"
 import { gpuStats } from "./GpuService"
+import { systemStats } from "./SystemService"
 
 function StatRow({ label, value }: { label: string; value: string }) {
   return (
@@ -65,6 +66,33 @@ export default function GpuScroll(gdkmonitor: Gdk.Monitor) {
             value={gpuStats(s => s.vramUtil)}
           />
           <UtilBar value={gpuStats(s => s.vramUtil)} />
+        </box>
+
+        <box cssName="divider" />
+
+        <label cssName="scroll-title" label="▓ SYS ▓" halign={Gtk.Align.CENTER} />
+
+        <box cssName="divider" />
+
+        <StatRow
+          label="CPU TEMP"
+          value={systemStats(s => s.cpuTemp)}
+        />
+
+        <box cssName="stat-section" orientation={Gtk.Orientation.VERTICAL} spacing={2}>
+          <StatRow
+            label="CPU"
+            value={systemStats(s => s.cpuUtil)}
+          />
+          <UtilBar value={systemStats(s => s.cpuUtil)} />
+        </box>
+
+        <box cssName="stat-section" orientation={Gtk.Orientation.VERTICAL} spacing={2}>
+          <StatRow
+            label="RAM"
+            value={systemStats(s => s.ramUtil)}
+          />
+          <UtilBar value={systemStats(s => s.ramUtil)} />
         </box>
       </box>
     </window>

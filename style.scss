@@ -65,3 +65,24 @@ window.GpuScroll {
 .stat-section {
   margin-top: 4px;
 }
+
+window.BookWidget {
+  background: transparent;
+}
+
+.book-page {
+  padding: 4px 6px;
+}
+
+.book-page-title {
+  font-family: "VT323";
+  font-size: 18px;
+  color: #b41414;
+  letter-spacing: 2px;
+}
+
+.book-stat {
+  font-family: "VT323";
+  font-size: 16px;
+  color: #c8b89a;
+}
