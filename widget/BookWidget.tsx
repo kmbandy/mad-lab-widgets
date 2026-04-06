@@ -131,20 +131,20 @@ export default function BookWidget(gdkmonitor: Gdk.Monitor) {
   clickCtrl.connect("pressed", () => turnPage())
   overlay.add_controller(clickCtrl)
 
-  return (
-    <window
-      visible
-      name="book-widget"
-      class="BookWidget"
-      gdkmonitor={gdkmonitor}
-      exclusivity={Astal.Exclusivity.NORMAL}
-      anchor={BOTTOM | RIGHT}
-      margin_bottom={16}
-      margin_right={-28}
-      layer={Astal.Layer.OVERLAY}
-      application={app}
-    >
-      {overlay}
-    </window>
-  )
+  const LayerShell = (imports.gi as any).Gtk4LayerShell
+  const win = new Gtk.Window({ application: app })
+  win.set_css_classes(["BookWidget"])
+  win.set_default_size(WIDGET_W, WIDGET_H)
+
+  LayerShell.init_for_window(win)
+  LayerShell.set_layer(win, LayerShell.Layer.BOTTOM)
+  LayerShell.set_anchor(win, LayerShell.Edge.BOTTOM, true)
+  LayerShell.set_anchor(win, LayerShell.Edge.RIGHT, true)
+  LayerShell.set_margin(win, LayerShell.Edge.BOTTOM, 16)
+  LayerShell.set_margin(win, LayerShell.Edge.RIGHT, 0)
+  LayerShell.set_namespace(win, "book-widget")
+
+  win.set_child(overlay)
+  win.present()
+  return win
 }
