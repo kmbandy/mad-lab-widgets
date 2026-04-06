@@ -53,22 +53,25 @@ export default function BookWidget(gdkmonitor: Gdk.Monitor) {
     })
   }
 
+  const mk = (font: string, size: number, text: string) =>
+    `<span font_family="${font}" font_size="${size}pt">${text}</span>`
+
   // Content overlay
   const gpuPage = (
     <box cssName="book-page" orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-      <label cssName="book-page-title" label="▓ GPU ▓" />
-      <label cssName="book-stat" label={gpuStats(s => `TEMP  ${s.temp}`)} />
-      <label cssName="book-stat" label={gpuStats(s => `GPU   ${s.gpuUtil}`)} />
-      <label cssName="book-stat" label={gpuStats(s => `VRAM  ${s.vramUtil}`)} />
+      <label use_markup label={mk("VT323", 20, "▓ GPU ▓")} />
+      <label use_markup label={gpuStats(s => mk("VT323", 18, `TEMP  ${s.temp}`))} />
+      <label use_markup label={gpuStats(s => mk("VT323", 18, `GPU   ${s.gpuUtil}`))} />
+      <label use_markup label={gpuStats(s => mk("VT323", 18, `VRAM  ${s.vramUtil}`))} />
     </box>
   ) as Gtk.Box
 
   const sysPage = (
     <box cssName="book-page" orientation={Gtk.Orientation.VERTICAL} spacing={4}>
-      <label cssName="book-page-title" label="▓ SYS ▓" />
-      <label cssName="book-stat" label={systemStats(s => `TEMP  ${s.cpuTemp}`)} />
-      <label cssName="book-stat" label={systemStats(s => `CPU   ${s.cpuUtil}`)} />
-      <label cssName="book-stat" label={systemStats(s => `RAM   ${s.ramUtil}`)} />
+      <label use_markup label={mk("VT323", 20, "▓ SYS ▓")} />
+      <label use_markup label={systemStats(s => mk("VT323", 18, `TEMP  ${s.cpuTemp}`))} />
+      <label use_markup label={systemStats(s => mk("VT323", 18, `CPU   ${s.cpuUtil}`))} />
+      <label use_markup label={systemStats(s => mk("VT323", 18, `RAM   ${s.ramUtil}`))} />
     </box>
   ) as Gtk.Box
 
@@ -80,7 +83,7 @@ export default function BookWidget(gdkmonitor: Gdk.Monitor) {
   contentStack.set_visible_child_name("gpu")
   contentStack.set_visible(false)
   contentStack.set_halign(Gtk.Align.START)
-  contentStack.set_margin_start(112)
+  contentStack.set_margin_start(98)
   contentStack.set_valign(Gtk.Align.START)
   contentStack.set_margin_top(105)
 
@@ -96,7 +99,7 @@ export default function BookWidget(gdkmonitor: Gdk.Monitor) {
     if (!isOpen || animating) return
     contentStack.set_visible(false)
   contentStack.set_halign(Gtk.Align.START)
-  contentStack.set_margin_start(112)
+  contentStack.set_margin_start(98)
   contentStack.set_valign(Gtk.Align.START)
   contentStack.set_margin_top(105)
     animate([3, 2, 1, 0], () => { isOpen = false })
@@ -106,7 +109,7 @@ export default function BookWidget(gdkmonitor: Gdk.Monitor) {
     if (!isOpen || animating) return
     contentStack.set_visible(false)
   contentStack.set_halign(Gtk.Align.START)
-  contentStack.set_margin_start(112)
+  contentStack.set_margin_start(98)
   contentStack.set_valign(Gtk.Align.START)
   contentStack.set_margin_top(105)
     animate([3, 4, 5, 6, 3], () => {
@@ -142,6 +145,7 @@ export default function BookWidget(gdkmonitor: Gdk.Monitor) {
   LayerShell.set_anchor(win, LayerShell.Edge.RIGHT, true)
   LayerShell.set_margin(win, LayerShell.Edge.BOTTOM, 16)
   LayerShell.set_margin(win, LayerShell.Edge.RIGHT, 0)
+  LayerShell.set_monitor(win, gdkmonitor)
   LayerShell.set_namespace(win, "book-widget")
 
   win.set_child(overlay)
