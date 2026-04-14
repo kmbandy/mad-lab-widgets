@@ -1,5 +1,6 @@
 import { createPoll } from "ags/time"
-import { execAsync } from "ags/process"
+
+const MAD_LAB_URL = "http://mad-lab:18810/api/codeburn"
 
 export interface CodeburnStats {
   todayCost: string
@@ -8,25 +9,23 @@ export interface CodeburnStats {
   monthCalls: number
 }
 
-function parseCodeburn(output: string): CodeburnStats {
+const fallback: CodeburnStats = { todayCost: "--", todayCalls: 0, monthCost: "--", monthCalls: 0 }
+
+async function fetchCodeburn(): Promise<CodeburnStats> {
   try {
-    const data = JSON.parse(output)
+    const res = await fetch(MAD_LAB_URL)
+    if (!res.ok) return fallback
+    const data = await res.json()
     return {
-      todayCost:   `$${data.today.cost.toFixed(2)}`,
-      todayCalls:  data.today.calls,
-      monthCost:   `$${data.month.cost.toFixed(2)}`,
-      monthCalls:  data.month.calls,
+      todayCost:  `$${data.today.cost.toFixed(2)}`,
+      todayCalls: data.today.calls,
+      monthCost:  `$${data.month.cost.toFixed(2)}`,
+      monthCalls: data.month.calls,
     }
   } catch {
-    return { todayCost: "ERR", todayCalls: 0, monthCost: "ERR", monthCalls: 0 }
+    return fallback
   }
 }
 
-// Poll every 5 minutes — codeburn reads from disk, no API call needed
-export const codeburnStats = createPoll(
-  { todayCost: "--", todayCalls: 0, monthCost: "--", monthCalls: 0 },
-  300_000,
-  () => execAsync("codeburn status --format json")
-        .then(parseCodeburn)
-        .catch(() => ({ todayCost: "ERR", todayCalls: 0, monthCost: "ERR", monthCalls: 0 }))
-)
+// Poll every 5 minutes
+export const codeburnStats = createPoll(fallback, 300_000, fetchCodeburn)
