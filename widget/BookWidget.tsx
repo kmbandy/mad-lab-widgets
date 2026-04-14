@@ -2,13 +2,14 @@ import app from "ags/gtk4/app"
 import { Astal, Gtk, Gdk } from "ags/gtk4"
 import { gpuStats } from "./GpuService"
 import { systemStats } from "./SystemService"
+import { codeburnStats } from "./CodeburnService"
 
 const FRAME_W = 190
 const FRAME_H = 160
 const SCALE = 3
 const WIDGET_W = FRAME_W * SCALE
 const WIDGET_H = FRAME_H * SCALE
-const TOTAL_PAGES = 2
+const TOTAL_PAGES = 3
 
 export default function BookWidget(gdkmonitor: Gdk.Monitor) {
   const { BOTTOM, RIGHT } = Astal.WindowAnchor
@@ -75,11 +76,21 @@ export default function BookWidget(gdkmonitor: Gdk.Monitor) {
     </box>
   ) as Gtk.Box
 
-  const pages = [gpuPage, sysPage]
+  const burnPage = (
+    <box cssName="book-page" orientation={Gtk.Orientation.VERTICAL} spacing={4}>
+      <label use_markup label={mk("VT323", 20, "✦ AI ✦")} />
+      <label use_markup label={codeburnStats(s => mk("VT323", 18, `TODAY ${s.todayCost}`))} />
+      <label use_markup label={codeburnStats(s => mk("VT323", 18, `MONTH ${s.monthCost}`))} />
+      <label use_markup label={codeburnStats(s => mk("VT323", 18, `CALLS ${s.todayCalls}`))} />
+    </box>
+  ) as Gtk.Box
+
+  const pages = [gpuPage, sysPage, burnPage]
 
   const contentStack = new Gtk.Stack()
   contentStack.add_named(gpuPage, "gpu")
   contentStack.add_named(sysPage, "sys")
+  contentStack.add_named(burnPage, "burn")
   contentStack.set_visible_child_name("gpu")
   contentStack.set_visible(false)
   contentStack.set_halign(Gtk.Align.START)
@@ -114,7 +125,8 @@ export default function BookWidget(gdkmonitor: Gdk.Monitor) {
   contentStack.set_margin_top(105)
     animate([3, 4, 5, 6, 3], () => {
       currentPage = (currentPage + 1) % TOTAL_PAGES
-      contentStack.set_visible_child_name(currentPage === 0 ? "gpu" : "sys")
+      const pageNames = ["gpu", "sys", "burn"]
+      contentStack.set_visible_child_name(pageNames[currentPage])
       contentStack.set_visible(true)
     })
   }
