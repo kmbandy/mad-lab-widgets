@@ -1,13 +1,13 @@
 import app from "ags/gtk4/app"
 import style from "./style.scss"
-import BookWidget from "./widget/BookWidget"
+import PowerMenu from "./widget/PowerMenu"
 
 app.start({
   css: style,
+  instanceName: "mad-lab",
   main() {
     const monitors = app.get_monitors()
-    // Find DP-2 monitor or fall back to first
-    const target = monitors.find((m: any) => m.get_connector?.() === 'DP-2') ?? monitors[0]
-    if (target) BookWidget(target)
+    const primary = monitors.find((m: any) => m.get_connector?.() === "DP-1") ?? monitors[0]
+    if (primary) PowerMenu(primary)
   },
 })

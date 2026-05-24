@@ -1,0 +1,19 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "dependencies": {
+        "ags": "github:aylur/ags",
+        "gnim": "^2.0.0-alpha.11",
+      },
+    },
+  },
+  "packages": {
+    "@gnim-js/linux-x64": ["@gnim-js/linux-x64@2.0.0-alpha.11", "", { "os": "linux", "cpu": "x64" }, "sha512-CK91Ei2y0zv1EV5pqPUeWPYiF3DpGWIN9ad0dXst5RJb7/qDMJdj1/tr0bG83nDySjr8U1whuMkLKpFADRLvUg=="],
+
+    "ags": ["ags@github:aylur/ags#bbee2f1", { "peerDependencies": { "gnim": "^1.9.1" } }, "Aylur-ags-bbee2f1", "sha512-OVpsVyy/+56B5qxKBfOE7la7FqtJ9dyAjkmIOV9CHGL4V8cxdevdugm2UOlGffoTyXUJH5R4byMkQqvbRgRcBw=="],
+
+    "gnim": ["gnim@2.0.0-alpha.11", "", { "optionalDependencies": { "@gnim-js/linux-x64": "2.0.0-alpha.11" }, "bin": { "gnim": "dist/bin/gnim.js" } }, "sha512-G7jom9pYRo8qvq6QNsdSpVL4l8tHuAxMGQOuR3/uboRxLn3X94ZUwkFmjWP5a4y4J6cNDVGwj6c4OP00aLvgOg=="],
+  }
+}

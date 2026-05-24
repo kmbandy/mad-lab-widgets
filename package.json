@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "ags": "*",
-    "gnim": "*"
+    "ags": "github:aylur/ags",
+    "gnim": "^2.0.0-alpha.11"
   },
   "prettier": {
     "semi": false,
