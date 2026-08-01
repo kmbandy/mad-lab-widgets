@@ -1,7 +1,7 @@
 import { createPoll } from "ags/time"
 import { execAsync } from "ags/process"
 
-const MAD_LAB_URL = "http://100.102.191.30:18810/api/codeburn"
+const MAD_LAB_URL = "http://mad-lab-2026.tail322e50.ts.net:18810/api/codeburn"
 
 export interface CodeburnStats {
   todayCost: string
